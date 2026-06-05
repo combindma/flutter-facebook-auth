@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.facebook.AccessToken;
+import com.facebook.AuthenticationToken;
 import com.facebook.CallbackManager;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -173,18 +174,20 @@ public class FacebookAuth {
    * @return a HashMap data
    */
   static HashMap<String, Object> getAccessToken(final AccessToken accessToken) {
-    return new HashMap<String, Object>() {
-      {
-        put("token", accessToken.getToken());
-        put("userId", accessToken.getUserId());
-        put("expires", accessToken.getExpires().getTime());
-        put("applicationId", accessToken.getApplicationId());
-        put("lastRefresh", accessToken.getLastRefresh().getTime());
-        put("isExpired", accessToken.isExpired());
-        put("grantedPermissions", new ArrayList<>(accessToken.getPermissions()));
-        put("declinedPermissions", new ArrayList<>(accessToken.getDeclinedPermissions()));
-        put("dataAccessExpirationTime", accessToken.getDataAccessExpirationTime().getTime());
-      }
-    };
+    final HashMap<String, Object> map = new HashMap<>();
+    map.put("token", accessToken.getToken());
+    map.put("userId", accessToken.getUserId());
+    map.put("expires", accessToken.getExpires().getTime());
+    map.put("applicationId", accessToken.getApplicationId());
+    map.put("lastRefresh", accessToken.getLastRefresh().getTime());
+    map.put("isExpired", accessToken.isExpired());
+    map.put("grantedPermissions", new ArrayList<>(accessToken.getPermissions()));
+    map.put("declinedPermissions", new ArrayList<>(accessToken.getDeclinedPermissions()));
+    map.put("dataAccessExpirationTime", accessToken.getDataAccessExpirationTime().getTime());
+    final AuthenticationToken authenticationToken = AuthenticationToken.getCurrentAuthenticationToken();
+    if (authenticationToken != null) {
+      map.put("authenticationToken", authenticationToken.getToken());
+    }
+    return map;
   }
 }

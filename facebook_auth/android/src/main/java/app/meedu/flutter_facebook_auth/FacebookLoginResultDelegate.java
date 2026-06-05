@@ -2,7 +2,6 @@ package app.meedu.flutter_facebook_auth;
 
 
 import android.content.Intent;
-import com.facebook.AuthenticationToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -30,10 +29,6 @@ class FacebookLoginResultDelegate implements FacebookCallback<LoginResult>, Plug
     @Override
     public void onSuccess(LoginResult loginResult) {
         final HashMap<String, Object> accessToken = FacebookAuth.getAccessToken(loginResult.getAccessToken());
-        final AuthenticationToken authenticationToken = loginResult.getAuthenticationToken();
-        if (authenticationToken != null) {
-            accessToken.put("authenticationToken", authenticationToken.getToken());
-        }
         finishWithResult(accessToken);// send response to the client
     }
 
