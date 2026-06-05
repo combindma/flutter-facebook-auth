@@ -15,6 +15,21 @@ abstract class MockData {
     "dataAccessExpirationTime": 1610201170749,
   };
 
+  static const accessTokenWithAuthenticationToken = {
+    "userId": "136742241592917",
+    "token":
+        "EAAS5elFDcaYBAB4KyXaxBtEBjkgYpAEZAZAFuV6VHxxfC29l6ZCjgEmYKVguY3Uos5fQ0blVON2WccIvLCQ72EFHDa0ZAmludHCbGN3jNDpzq2L78X74dYTYBAokZAzFWZBwg2biPlEboXkZCWjNWubmE3TES5er3yxZArstszCbQtfue1ECxkjzHhwUkdYNuMJgzo1WVUa4Cc7z2M029srT",
+    "expires": 1610201170749,
+    "lastRefresh": 1610051315980,
+    "applicationId": "1329834907365798",
+    "graphDomain": "facebook",
+    "isExpired": false,
+    "grantedPermissions": ["email", "openid", "user_link"],
+    "declinedPermissions": [],
+    "dataAccessExpirationTime": 1610201170749,
+    "authenticationToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InRlc3Qta2V5In0.eyJpc3MiOiJodHRwczovL3d3dy5mYWNlYm9vay5jb20iLCJzdWIiOiIxMzY3NDIyNDE1OTI5MTciLCJhdWQiOiIxMzI5ODM0OTA3MzY1Nzk4IiwiaWF0IjoxNjEwMDUxMzE1LCJleHAiOjE2MTAyMDExNzAsIm5vbmNlIjoidGVzdC1ub25jZSJ9.signature",
+  };
+
   static Map<String, dynamic> get userData {
     return {
       "name": "Open Graph Test User",
