@@ -1,4 +1,4 @@
-## 2.1.2
+## 2.1.3
 - Bumped `flutter_secure_storage` dependency to `^10.3.1`.
 
 ## 2.1.0
