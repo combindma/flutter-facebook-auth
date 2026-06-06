@@ -147,6 +147,70 @@ void main() {
       expect(FacebookAuthPlatform.instance, isA<MockFacebookAuthPlatform>());
     });
   });
+
+  group('authenticationToken', () {
+    const MethodChannel channel = MethodChannel(
+      'app.meedu/flutter_facebook_auth',
+    );
+    late FacebookAuthPlatform facebookAuth;
+
+    setUp(() {
+      facebookAuth = FacebookAuthPlatform.getInstance();
+    });
+
+    test('login: authenticationToken is populated when native layer returns it', () async {
+      channel.setMockMethodCallHandler((MethodCall call) async {
+        if (call.method == 'login') return MockData.accessTokenWithAuthenticationToken;
+        return null;
+      });
+
+      final result = await facebookAuth.login(loginBehavior: LoginBehavior.webOnly);
+      expect(result.status, LoginStatus.success);
+      expect(result.accessToken, isA<ClassicToken>());
+      final token = result.accessToken as ClassicToken;
+      expect(token.authenticationToken, isNotNull);
+      expect(token.authenticationToken, MockData.accessTokenWithAuthenticationToken['authenticationToken']);
+    });
+
+    test('login: authenticationToken is null when native layer omits it', () async {
+      channel.setMockMethodCallHandler((MethodCall call) async {
+        if (call.method == 'login') return MockData.accessToken;
+        return null;
+      });
+
+      final result = await facebookAuth.login(loginBehavior: LoginBehavior.webOnly);
+      expect(result.status, LoginStatus.success);
+      expect(result.accessToken, isA<ClassicToken>());
+      final token = result.accessToken as ClassicToken;
+      expect(token.authenticationToken, isNull);
+    });
+
+    test('expressLogin: authenticationToken is populated when native layer returns it', () async {
+      channel.setMockMethodCallHandler((MethodCall call) async {
+        if (call.method == 'expressLogin') return MockData.accessTokenWithAuthenticationToken;
+        return null;
+      });
+
+      final result = await facebookAuth.expressLogin();
+      expect(result.status, LoginStatus.success);
+      expect(result.accessToken, isA<ClassicToken>());
+      final token = result.accessToken as ClassicToken;
+      expect(token.authenticationToken, isNotNull);
+      expect(token.authenticationToken, MockData.accessTokenWithAuthenticationToken['authenticationToken']);
+    });
+
+    test('getAccessToken: authenticationToken is populated when native layer returns it', () async {
+      channel.setMockMethodCallHandler((MethodCall call) async {
+        if (call.method == 'getAccessToken') return MockData.accessTokenWithAuthenticationToken;
+        return null;
+      });
+
+      final token = await facebookAuth.accessToken;
+      expect(token, isA<ClassicToken>());
+      expect((token as ClassicToken).authenticationToken, isNotNull);
+      expect(token.authenticationToken, MockData.accessTokenWithAuthenticationToken['authenticationToken']);
+    });
+  });
 }
 
 class MockFacebookAuthPlatform extends FacebookAuthPlatform with Mock {}

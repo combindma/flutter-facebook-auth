@@ -96,5 +96,88 @@ void main() {
       await facebookAuth.autoLogAppEventsEnabled(true);
       expect(await facebookAuth.isAutoLogAppEventsEnabled, true);
     });
+
+    test('login: authenticationToken is populated when native layer returns it', () async {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(
+        channel,
+        (MethodCall call) async {
+          if (call.method == 'login') return mockAccessTokenWithAuthenticationToken;
+          return null;
+        },
+      );
+
+      final result = await facebookAuth.login(
+        permissions: ['email', 'openid'],
+        loginBehavior: LoginBehavior.webOnly,
+      );
+      expect(result.status, LoginStatus.success);
+      expect(result.accessToken, isA<ClassicToken>());
+      final token = result.accessToken as ClassicToken;
+      expect(token.authenticationToken, isNotNull);
+      expect(
+        token.authenticationToken,
+        mockAccessTokenWithAuthenticationToken['authenticationToken'],
+      );
+    });
+
+    test('login: authenticationToken is null when native layer omits it', () async {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(
+        channel,
+        (MethodCall call) async {
+          if (call.method == 'login') return mockAccessToken;
+          return null;
+        },
+      );
+
+      final result = await facebookAuth.login(
+        loginBehavior: LoginBehavior.webOnly,
+      );
+      expect(result.status, LoginStatus.success);
+      expect(result.accessToken, isA<ClassicToken>());
+      final token = result.accessToken as ClassicToken;
+      expect(token.authenticationToken, isNull);
+    });
+
+    test('expressLogin: authenticationToken is populated when native layer returns it', () async {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(
+        channel,
+        (MethodCall call) async {
+          if (call.method == 'expressLogin') return mockAccessTokenWithAuthenticationToken;
+          return null;
+        },
+      );
+
+      final result = await facebookAuth.expressLogin();
+      expect(result.status, LoginStatus.success);
+      expect(result.accessToken, isA<ClassicToken>());
+      final token = result.accessToken as ClassicToken;
+      expect(token.authenticationToken, isNotNull);
+      expect(
+        token.authenticationToken,
+        mockAccessTokenWithAuthenticationToken['authenticationToken'],
+      );
+    });
+
+    test('getAccessToken: authenticationToken is populated when native layer returns it', () async {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(
+        channel,
+        (MethodCall call) async {
+          if (call.method == 'getAccessToken') return mockAccessTokenWithAuthenticationToken;
+          return null;
+        },
+      );
+
+      final token = await facebookAuth.accessToken;
+      expect(token, isA<ClassicToken>());
+      expect((token as ClassicToken).authenticationToken, isNotNull);
+      expect(
+        token.authenticationToken,
+        mockAccessTokenWithAuthenticationToken['authenticationToken'],
+      );
+    });
   });
 }
