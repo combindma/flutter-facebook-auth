@@ -21,10 +21,10 @@ jobs:
         with:
           flutter-version: '3.29.2'
       - name: Install facebook_auth dependencies 
-        run: cd facebook_auth && flutter pub get
+        run: cd flutter_facebook_auth && flutter pub get
 
       - name: Run facebook_auth tests
-        run: cd facebook_auth && flutter test --platform chrome
+        run: cd flutter_facebook_auth && flutter test --platform chrome
       
       - name: Install facebook_auth_platform_interface dependencies
         run: cd facebook_auth_platform_interface && flutter pub get
