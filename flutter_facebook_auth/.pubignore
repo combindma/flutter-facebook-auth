@@ -1,1 +1,15 @@
+# Ignore all build and IDE directories
+.dart_tool/
+.fvm/
+.idea/
+.vscode/
+build/
+coverage/
 example/
+
+# Ignore development/configuration files
+.DS_Store
+.packages
+.pub/
+*.iml
+*.log
