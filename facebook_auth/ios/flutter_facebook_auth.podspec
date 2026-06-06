@@ -13,7 +13,11 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'meedu.app' => 'contacto@meedu.app' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  # Sources now live under the Swift-Package layout
+  # (ios/flutter_facebook_auth/Sources/...). CocoaPods consumers see
+  # the same files from this relative path, so no behavior change.
+  s.source_files = 'flutter_facebook_auth/Sources/flutter_facebook_auth/**/*.{h,m,swift}'
+  s.public_header_files = 'flutter_facebook_auth/Sources/flutter_facebook_auth/include/flutter_facebook_auth/*.h'
   s.dependency 'Flutter'
 
 
