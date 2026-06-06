@@ -1,3 +1,6 @@
+## 2.1.2
+- Bumped `flutter_secure_storage` dependency to `^10.3.1`.
+
 ## 2.1.0
 - flutter_facebook_auth_platform_interface: ^6.1.2
 

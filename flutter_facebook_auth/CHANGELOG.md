@@ -1,6 +1,7 @@
 ## 7.1.6
 - feat(iOS): Adopt `FlutterSceneLifeCycleDelegate` to support applications using the UIScene lifecycle. This ensures native Facebook app login callbacks (via the `fb<APP_ID>://` URL scheme) reach the Facebook SDK.
 - Bumps minimum Flutter SDK version to 3.38.0.
+- Updated to `facebook_auth_desktop: ^2.1.2`.
 
 ## 7.1.5
 - Use fixed version of `FBSDKLoginKit` to avoid issues on iOS.
