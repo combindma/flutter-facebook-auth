@@ -15,12 +15,9 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that platform version is retrieved.
+    // Verify that sign in button is present.
     expect(
-      find.byWidgetPredicate(
-        (Widget widget) => widget is Text &&
-                           widget.data!.startsWith('Running on:'),
-      ),
+      find.text('sign in'),
       findsOneWidget,
     );
   });

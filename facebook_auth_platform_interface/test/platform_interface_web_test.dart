@@ -1,5 +1,6 @@
 @TestOn('browser')
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth_platform_interface/flutter_facebook_auth_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,6 +16,7 @@ void main() {
     );
     late bool isLogged;
     setUp(() {
+      debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
       isLogged = false;
       channel.setMockMethodCallHandler((MethodCall call) async {
         switch (call.method) {
