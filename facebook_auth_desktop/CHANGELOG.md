@@ -1,3 +1,6 @@
+## 2.2.0
+- Added Swift Package Manager (SPM) support for macOS. The plugin now ships a `Package.swift` (sources under `macos/facebook_auth_desktop/Sources/`) while keeping the podspec for CocoaPods compatibility.
+
 ## 2.1.3
 - Bumped `flutter_secure_storage` dependency to `^10.3.1`.
 
