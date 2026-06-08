@@ -13,7 +13,10 @@ A new flutter plugin project.
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
-  s.source_files     = 'Classes/**/*'
+  # Sources now live under the Swift-Package layout
+  # (macos/facebook_auth_desktop/Sources/...). CocoaPods consumers see
+  # the same files from this relative path, so no behavior change.
+  s.source_files     = 'facebook_auth_desktop/Sources/facebook_auth_desktop/**/*'
   s.dependency 'FlutterMacOS'
 
   s.platform = :osx, '10.11'
