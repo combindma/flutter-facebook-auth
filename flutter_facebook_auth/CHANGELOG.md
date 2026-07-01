@@ -1,3 +1,7 @@
+## 7.1.8
+- Migrate Android plugin to Built-in Kotlin (drop legacy Kotlin Gradle Plugin apply).
+- Clean up unused Kotlin template files in the Android module.
+
 ## 7.1.7
 - feat(iOS): Adopt `FlutterSceneLifeCycleDelegate` to support applications using the UIScene lifecycle. This ensures native Facebook app login callbacks (via the `fb<APP_ID>://` URL scheme) reach the Facebook SDK.
 - Bumps minimum Flutter SDK version to 3.38.0.
