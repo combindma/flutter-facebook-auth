@@ -64,7 +64,12 @@ final LoginResult result = await FacebookAuth.instance.login();
 :::
 
 ## BREAKING CHANGES TO SUPPORT THE LIMITED LOGIN
-- iOS: Added `nonce` parameter in `login` function.
+- iOS & Android: Added `nonce` parameter in `login` function.
+  
+  :::note Nonce on Android
+  Starting from version **7.2.0**, the `nonce` parameter is forwarded to the native login call on Android (using `LoginConfiguration`). If a `nonce` is provided and the login completes successfully, the returned `ClassicToken` will contain the `authenticationToken` (OIDC ID token). Note that Facebook's native Android SDK only returns the `AuthenticationToken` on the first authorization.
+  :::
+  
 - **BREAKING CHANGE** Removed the `grantedPermissions` getter.
 - **BREAKING CHANGE** Added support for limited login:
   - iOS: If the user has not granted the AdvertiserTracking permission, the login process will now enter a [Limited Login mode](https://developers.facebook.com/docs/facebook-login/limited-login).

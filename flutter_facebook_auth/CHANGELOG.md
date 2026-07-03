@@ -1,3 +1,7 @@
+## 7.2.0
+- feat(Android): Forward `nonce` to native login to support OIDC ID tokens (`AuthenticationToken`).
+- Android now extracts the `AuthenticationToken` from the login result and includes it in `ClassicToken.authenticationToken`, matching iOS behavior.
+
 ## 7.1.8
 - Migrate Android plugin to Built-in Kotlin (drop legacy Kotlin Gradle Plugin apply).
 - Clean up unused Kotlin template files in the Android module.
