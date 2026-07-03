@@ -10,6 +10,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.LoginStatusCallback;
 import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginConfiguration;
 import com.facebook.login.LoginManager;
 
 import org.json.JSONObject;
@@ -36,16 +37,22 @@ public class FacebookAuth {
    *
    * @param activity the android activity to handle onActivityResult event
    * @param permissions list of permissions
+   * @param nonce optional nonce used to request an OIDC id token (AuthenticationToken)
    * @param result flutter method channel result to send the response to the client
    */
-  void login(Activity activity, List<String> permissions, MethodChannel.Result result) {
+  void login(Activity activity, List<String> permissions, String nonce, MethodChannel.Result result) {
     final boolean hasPreviousSession = AccessToken.getCurrentAccessToken() != null;
     if (hasPreviousSession) {
       loginManager.logOut();
     }
     final boolean isOk = resultDelegate.setPendingResult(result);
     if (isOk) {
-      loginManager.logIn(activity, permissions);
+      if (nonce != null && !nonce.isEmpty()) {
+        LoginConfiguration configuration = new LoginConfiguration(permissions, nonce);
+        loginManager.logIn(activity, configuration);
+      } else {
+        loginManager.logIn(activity, permissions);
+      }
     }
   }
 
