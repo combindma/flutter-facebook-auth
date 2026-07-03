@@ -140,6 +140,54 @@ void main() {
       expect(token.authenticationToken, isNull);
     });
 
+    test('login: forwards nonce and permissions to the native layer', () async {
+      MethodCall? captured;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(
+        channel,
+        (MethodCall call) async {
+          if (call.method == 'login') {
+            captured = call;
+            return mockAccessTokenWithAuthenticationToken;
+          }
+          return null;
+        },
+      );
+
+      await facebookAuth.login(
+        permissions: ['email', 'public_profile', 'openid'],
+        loginBehavior: LoginBehavior.nativeWithFallback,
+        nonce: 'my-test-nonce',
+      );
+
+      expect(captured, isNotNull);
+      final args = Map<String, dynamic>.from(captured!.arguments as Map);
+      expect(args['nonce'], 'my-test-nonce');
+      expect(args['permissions'], containsAll(['email', 'public_profile', 'openid']));
+      expect(args['loginBehavior'], 'NATIVE_WITH_FALLBACK');
+    });
+
+    test('login: nonce is null in native arguments when not provided', () async {
+      MethodCall? captured;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(
+        channel,
+        (MethodCall call) async {
+          if (call.method == 'login') {
+            captured = call;
+            return mockAccessToken;
+          }
+          return null;
+        },
+      );
+
+      await facebookAuth.login();
+
+      expect(captured, isNotNull);
+      final args = Map<String, dynamic>.from(captured!.arguments as Map);
+      expect(args['nonce'], isNull);
+    });
+
     test('expressLogin: authenticationToken is populated when native layer returns it', () async {
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(
